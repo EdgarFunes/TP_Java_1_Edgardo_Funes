@@ -2,16 +2,39 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
+        int option = 0;
+        do{
+            try{
+                System.out.print("Ingrese el numero del ejercicio a ejecutar o 0 para salir: ");
+                option = input.nextInt();
+                input.nextLine();
 
-        ejercicio1(input);
-        ejercicio2(input);
-        ejercicio3(input);
-
+                switch (option){
+                    case 0:
+                        System.out.println("Finalizando ejecucion");
+                        break;
+                    case 1:
+                        ejercicio1(input);
+                        break;
+                    case 2:
+                        ejercicio2(input);
+                        break;
+                    case 3:
+                        ejercicio3(input);
+                        break;
+                    case 4:
+                        ejercicio4(input);
+                    default:
+                        System.out.println("Esa opcion no existe");
+                        break;
+                }
+            }catch(Exception e){
+                System.out.println("Entrada incorrecta, por favor intente nuevamente");
+            }
+        }while(option != 0);
 
     }
     public static void ejercicio1(Scanner input){
@@ -94,7 +117,7 @@ public class Main {
         ejercicio.*/
 
         System.out.print("Ingrese su peso en kilogramos: ");
-        Double peso = input.nextDouble();
+        float peso = input.nextFloat();
 
         System.out.print("Ingrese la duración del ejercicio en minutos: ");
         int duracion = input.nextInt();
@@ -103,21 +126,14 @@ public class Main {
         System.out.println("Ingrese el tipo de ejercicio(correr, nadar, andar en bicicleta): ");
         String ejercicio = input.nextLine();
 
-        Double metCorrer = 8.0, metNadar = 6.0, metBicicleta = 5.0, met;
+        float metCorrer = 8.0f, metNadar = 6.0f, metBicicleta = 5.0f, met;
 
-        switch(ejercicio.toLowerCase()){
-            case "correr":
-                met = metCorrer;
-                break;
-            case "nadar":
-                met = metNadar;
-                break;
-            case "andar en bicicleta":
-                met = metBicicleta;
-                break;
-            default:
-                met = 3.5;
-        }
+        met = switch (ejercicio.toLowerCase()) {
+            case "correr" -> metCorrer;
+            case "nadar" -> metNadar;
+            case "andar en bicicleta" -> metBicicleta;
+            default -> 3.5f;
+        };
         double caloriasPorMinuto = 0.0175 * peso * met;
         System.out.println("Para " + ejercicio + " con " + peso + "kg durante " +
                 duracion + " minutos, usted pierde " + Math.round(caloriasPorMinuto)/100d +
@@ -129,6 +145,69 @@ public class Main {
         /*Escribe un programa que pida al usuario su nivel de condición física (principiante, intermedio,
         avanzado) y luego genere una rutina de ejercicio semanal con diferentes tipos de ejercicios y
         duraciones.*/
-        System.out.print("");
+        System.out.println("""
+                Escoja su nivel de condicion fisica:\s
+                [1] Principiante
+                [2] Intermedio
+                [3] Avanzado
+                [0] Salir""");
+        int option = input.nextInt();
+        if(option == 1){
+            System.out.println("""
+                    Rutina para Principiantes\s
+                    Frecuencia: 3 días a la semana (por ejemplo, lunes, miércoles y viernes)\s
+                    Calentamiento: 5-10 minutos de caminata ligera o bicicleta estática.\s
+                    Ejercicios:\s
+                    3 series de 10-12 repeticiones de flexiones de rodillas.\s
+                    3 series de 10-12 repeticiones de sentadillas.\s
+                    3 series de 10 repeticiones de remo con mancuernas.\s
+                    3 series de 15 repeticiones de abdominales.\s
+                    Enfriamiento: 5-10 minutos de estiramientos.\s
+                    """);
+        }else if(option == 2){
+            System.out.println("""
+                    Rutina para Intermedios\s
+                    Frecuencia: 4 días a la semana (por ejemplo, lunes, martes, jueves y viernes)\s
+                    Calentamiento: 10 minutos de trote suave.\s
+                    Ejercicios:\s
+                    Día 1: Pecho y tríceps\s
+                    4 series de 10 repeticiones de press de banca.\s
+                    3 series de 10 repeticiones de fondos.\s
+                    Día 2: Espalda y bíceps\s
+                    4 series de 10 repeticiones de dominadas.\s
+                    3 series de 10 repeticiones de curl de bíceps.\s
+                    Día 3: Piernas\s
+                    4 series de 10 repeticiones de sentadillas con barra.\s
+                    3 series de 12 repeticiones de prensa de piernas.\s
+                    Día 4: Core y cardio\s
+                    3 series de 15 repeticiones de plancha (30-60 segundos).\s
+                    20 minutos de ciclismo o natación.\s
+                    Enfriamiento: 10 minutos de estiramientos.\s
+                    """);
+        }else if(option == 3){
+            System.out.println("""
+                    Rutina para Avanzados\s
+                    Frecuencia: 5-6 días a la semana (por ejemplo, lunes a sábado)\s
+                    Calentamiento: 10-15 minutos de HIIT (entrenamiento de intervalos de alta intensidad).\s
+                    Ejercicios:\s
+                    Día 1: Pecho y espalda\s
+                    4 series de 8-10 repeticiones de press de banca inclinado.\s
+                    4 series de 8-10 repeticiones de remo con barra.\s
+                    Día 2: Piernas\s
+                    4 series de 8-10 repeticiones de sentadillas frontales.\s
+                    4 series de 10 repeticiones de peso muerto.\s
+                    Día 3: Hombros y brazos\s
+                    4 series de 8-10 repeticiones de press militar.\s
+                    4 series de 10 repeticiones de extensiones de tríceps.\s
+                    Día 4: Core y cardio\s
+                    4 series de 15 repeticiones de elevaciones de piernas.\s
+                    30 minutos de circuito de cardio (correr, saltar la cuerda, etc.).\s
+                    Día 5: Full body\s
+                    3 series de 10 repeticiones de burpees.\s
+                    3 series de 10 repeticiones de kettlebell swings.\s
+                    Enfriamiento: 10-15 minutos de estiramientos y movilidad.\s
+                    """);
+        }else System.out.println("No existe esa opcion");
     }
+    public static void ejercicio4(Scanner input){}
 }
